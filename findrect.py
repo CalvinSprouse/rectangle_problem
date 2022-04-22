@@ -58,21 +58,22 @@ def splitList(inList: [], seperator: int):
     return result
 
 
-if __name__ == "__main__":
-    nums = 10 # number of numbers/length of initial list
-    maxVal = nums # maximum value each number can take in list
-    minVal = 1 # removing 0 produces more interesting results
+def test(listLength: int, maxVal: int, minVal: int = 1, printList: bool = False):
+    # number of numbers/length of initial list
+    # maximum value each number can take in list
+    # minVal removing 0 produces more interesting results
 
     # in most cases setting maxVal to be >> or << than nums
     # produces uninteresting results (super long rect or super tall)
 
     # generate the list of numbers with above conditions
-    numList = [random.randrange(minVal, maxVal, 1) for i in range(nums)]
+    numList = [random.randrange(minVal, maxVal, 1) for i in range(listLength)]
 
-    # run test (timing after list generation)
-    print(f"Starting Test Length={maxVal} MaxVal={nums}")
-    print(f"Nums List = {numList}") # comment out for large numLists
-    print("")
+    # run test (timing after list generation and only for solving)
+    print("-"*10)
+    print(f"Starting Test Length={listLength} MaxVal={maxVal} MinVal={minVal}")
+    if printList: print(f"Nums List = {numList}\n")
+
     start = time.time()
     answers = findLargestRect(numList)
     end = time.time()
@@ -81,9 +82,21 @@ if __name__ == "__main__":
     ans = []
     ansMax = 0
     for response in answers:
-        print(f"Rectangle Found: {response}")
+        if printList: print(f"> Rectangle Found: {response}")
+
         if response[0] > ansMax:
             ans = response
             ansMax = response[0]
-    print(f"\nLargest Rectangle={ans}\nFound in: {end-start}s")
-    print(f"From Nums List {numList}") # comment out for large numLists
+
+    # output either just area or area and list subsection
+    if printList:
+        print(f"\nLargest Rectangle={ans}\nFound in: {end-start}s")
+    else:
+        print(f"\nLargest Rectangle={ans[0]}\nFound in: {end-start}s")
+
+    if printList: print(f"From Nums List {numList}")
+    print("-"*10)
+
+
+if __name__ == "__main__":
+    test(listLength=10, maxVal=10, minVal=1, printList=True)
